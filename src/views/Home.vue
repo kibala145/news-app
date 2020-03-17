@@ -68,7 +68,7 @@ export default defineComponent({
       loading.value = true
 
       const qp = {q, country, pageSize, apiKey},
-            url = new URL('http://newsapi.org/v2/top-headlines')
+            url = new URL('https://newsapi.org/v2/top-headlines')
 
       Object.keys(qp).forEach(key => {if((qp as any)[key]) url.searchParams.append(key, (qp as any)[key])})
 
