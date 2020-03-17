@@ -1,32 +1,59 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app :dark="dark">
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <v-spacer />
+
+      <v-switch
+        v-model="dark"
+        color="grey"
+        @change="toggleTheme"
+        hide-details
+        light
+        flat
+        inset
+        :ripple="false"
+      >
+        <template v-slot:label>
+          <!-- <span :class="dark ? 'dark' : 'red'">dark mode</span> -->
+        </template>
+      </v-switch>
+      <!-- <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn> -->
+    </v-app-bar>
+
+    <v-content>
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from 'vue'
+import {defineComponent, ref, onMounted} from '@vue/composition-api'
 
-#nav {
-  padding: 30px;
+export default defineComponent({
+  name: 'App',
+  setup(_, {root}) {
+    const dark = ref(root.$vuetify.theme.dark)
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    function toggleTheme() {
+      root.$vuetify.theme.dark = !root.$vuetify.theme.dark
+    }
 
-    &.router-link-exact-active {
-      color: #42b983;
+    return {
+      dark,
+      toggleTheme
     }
   }
-}
-</style>
+});
+</script>
